@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  TestSwiftUI.swift
 //  SwiftUIShowcase
 //
 //  Created by Глеб Хамин on 18.12.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct TestSwiftUI: View {
 
     @State private var counterValue = 0
 
@@ -61,7 +61,7 @@ struct ContentView: View {
     }
 }
 
-struct ActionButton: View {
+private struct ActionButton: View {
     let btnTitle: String
     let btnColor: Color
     var body: some View {
@@ -77,5 +77,5 @@ struct ActionButton: View {
 }
 
 #Preview {
-    ContentView()
+    TestSwiftUI()
 }
