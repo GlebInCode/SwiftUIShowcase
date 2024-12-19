@@ -14,9 +14,13 @@ struct MainMenuView: View {
             Text("Пробы SwiftUI")
                 .font(.title)
             HStack {
-                NavigationLink(destination: TestSwiftUI()) {
+                NavigationLink(destination: TestOne()) {
                     ButtonLabel(text: "Test One", color: .cyan)
                 }
+                NavigationLink(destination: MainAPITest()) {
+                    ButtonLabel(text: "Test API", color: .red)
+                }
+                
             }
 
         }
