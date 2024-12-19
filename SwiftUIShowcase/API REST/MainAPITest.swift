@@ -13,7 +13,7 @@ struct MainAPITest: View {
     var body: some View {
         NavigationStack {
             NavigationLink {
-
+                UsersView()
             } label: {
                 HStack {
                     Text("Users")

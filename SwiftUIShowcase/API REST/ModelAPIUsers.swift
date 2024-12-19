@@ -14,6 +14,14 @@ struct PageUsers: Decodable {
     let total: Int
     let totalPages: Int
     let data: [User]
+
+    enum CodingKeys: String, CodingKey {
+        case page
+        case perPage = "per_page"
+        case total
+        case totalPages = "total_pages"
+        case data
+    }
 }
 
 // MARK: - Datum
@@ -23,6 +31,14 @@ struct User: Decodable, Hashable {
     let firstName: String
     let lastName: String
     let avatar: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case email
+        case firstName = "first_name"
+        case lastName = "last_name"
+        case avatar
+    }
 }
 
 extension User {

@@ -9,21 +9,26 @@ import SwiftUI
 
 struct UsersView: View {
 
-    @State private var users = [User.user]
+    @StateObject var networkManager = NetworkManager.shared
+
+//    @State private var users = [User.user]
 
     var body: some View {
         NavigationStack {
             ZStack {
-                List(users, id: \.self) { user in
+                List(networkManager.users, id: \.self) { user in
                     HStack {
-                        Text (user.firstName)
+                        Text (user.firstName ?? "Nil")
                         Spacer()
-                        Text (user.email)
+                        Text (user.email ?? "Nil")
                     }
                 }
             }
         }
         .navigationTitle("Users view")
+        .onAppear {
+            networkManager.fetchUsers()
+        }
     }
 }
 
