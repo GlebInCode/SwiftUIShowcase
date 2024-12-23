@@ -18,14 +18,18 @@ enum Link {
     }
 }
 
+enum NetworkError: Error {
+    case noData
+    case tooManyRequests
+    case decodingError
+}
+
 final class NetworkManager: ObservableObject {
     init() {}
 
     static let shared = NetworkManager()
 
-    @Published var users = [User]()
-
-    func fetchUsers() {
+    func fetchUsers(completion: @escaping(Result<[User], NetworkError>) -> Void) {
         print("try to fech")
 
         var fetchRequest = URLRequest(url: Link.users.url)
@@ -35,22 +39,28 @@ final class NetworkManager: ObservableObject {
         URLSession.shared.dataTask(with: fetchRequest) { (data, response, error) -> Void in
             if error != nil {
                 print("Error in session is not nil")
+                completion(.failure(.noData))
             } else {
 
                 let httpResponse = response as? HTTPURLResponse
                 print("Status code: \(String(describing: httpResponse?.statusCode))")
 
-                guard let safeData = data else {
-                    print("Error safeData")
-                    return
-                }
-
-                if let decodedQuery = try? JSONDecoder().decode(PageUsers.self, from: safeData) {
-                    DispatchQueue.main.async {
-                        self.users = decodedQuery.data
-                    }
+                if httpResponse?.statusCode != 200 {
+                    completion(.failure(.tooManyRequests))
                 } else {
-                    print("Error decodedQuery")
+                    guard let safeData = data else {
+                        print("Error safeData")
+                        return
+                    }
+
+                    do {
+                        let decodedQuery = try JSONDecoder().decode(PageUsers.self, from: safeData)
+                        completion(.success(decodedQuery.data))
+
+                    } catch let decodeError {
+                        print("Error decodedQuery \(decodeError)")
+                        completion(.failure(.decodingError))
+                    }
                 }
             }
         }.resume()
