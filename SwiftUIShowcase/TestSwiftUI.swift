@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TestOne: View {
+struct TestSwiftUI: View {
 
     @State private var counterValue = 0
 
@@ -77,5 +77,5 @@ private struct ActionButton: View {
 }
 
 #Preview {
-    TestOne()
+    TestSwiftUI()
 }
