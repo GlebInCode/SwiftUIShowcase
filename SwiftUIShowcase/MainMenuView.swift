@@ -8,22 +8,32 @@
 import SwiftUI
 
 struct MainMenuView: View {
-
+    
     var body: some View {
         NavigationStack {
-            Text("Пробы SwiftUI")
+            Text("SwiftUI")
                 .font(.title)
-            HStack {
-                NavigationLink(destination: TestSwiftUI()) {
-                    ButtonLabel(text: "Test One", color: .cyan)
+            VStack {
+                HStack {
+                    NavigationLink(destination: TestOne()) {
+                        ButtonLabel(text: "Test One", color: .cyan)
+                    }
+                    NavigationLink(destination: MainAPITest()) {
+                        ButtonLabel(text: "Test API", color: .red)
+                    }
+                }
+                HStack {
+                    NavigationLink(destination: SwiftUIComponents()) {
+                        ButtonLabel(text: "SwiftUI Components", color: .black)
+                    }
                 }
             }
-
         }
+        .navigationTitle("Main Menu")
     }
 }
 
-private struct ButtonLabel: View {
+struct ButtonLabel: View {
     var text: String
     var color: Color
     var body: some View {
