@@ -11,10 +11,14 @@ struct SwiftUICollections: View {
 
     var body: some View {
         NavigationStack {
-            HStack {
+            VStack {
                 NavigationLink(destination: CollectionDragAndDropView1()) {
                     ButtonLabel(text: "Drag and Drop 1", color: .gray)
                 }
+                NavigationLink(destination: CollectionDragAndDropView2()) {
+                    ButtonLabel(text: "Drag and Drop 2", color: .gray)
+                }
+
             }
 
         }

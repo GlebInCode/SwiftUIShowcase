@@ -27,17 +27,11 @@ struct CollectionDragAndDropView1: View {
         NavigationView {
             HStack {
                 TodoView()
-
-
                 WorkingView()
-
-
                 CompletedView()
-
-
             }
         }
-        .navigationTitle("Collection Drag And Drop")
+        .navigationTitle("Collection Drag And Drop 1")
     }
     // Tasks View
     @ViewBuilder
@@ -50,8 +44,10 @@ struct CollectionDragAndDropView1: View {
                 }
                 .frame(height: 45)
             }
+            Spacer()
         })
         .frame(maxWidth: .infinity)
+        .background(Color(.secondarySystemFill))
         .padding()
     }
     // Task Row
@@ -68,16 +64,30 @@ struct CollectionDragAndDropView1: View {
                 Text(task.title)
                     .lineLimit(1)
                     .padding(.horizontal, 5)
-//                    .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(width: size.width, height: size.height, alignment: .leading)
-                    .background(.white)
+                    .background(.red)
                     .contentShape(.dragPreview, .rect(cornerRadius: 10))
+                    .onDrag() {
+                        switch task.status {
+                        case .todo:
+                            todo.removeAll(where: { $0.id == task.id })
+                            return NSItemProvider(object: task.title as NSItemProviderWriting)
+                        case .working:
+                            working.removeAll(where: { $0.id == task.id })
+                            return NSItemProvider(object: task.title as NSItemProviderWriting)
+                        case .completed:
+                            completed.removeAll(where: { $0.id == task.id })
+                            return NSItemProvider(object: task.title as NSItemProviderWriting)
+                        }
+                    }
                     .onAppear(perform: {
                         currentlyDragging = task
+
                     })
             }
             .dropDestination(for: String.self) { items, location in
                 currentlyDragging = nil
+
                 return false
             } isTargeted: { status in
                 if let currentlyDragging, status, currentlyDragging.id != task.id {
@@ -170,11 +180,12 @@ struct CollectionDragAndDropView1: View {
                 withAnimation(.snappy) {
                     appendTask(.todo)
                 }
-                return true
-            } isTargeted: { _ in
-
+                return false
             }
+            Spacer()
         }
+        .frame(maxWidth: .infinity)
+        .background(.ultraThinMaterial)
     }
     // Working View
     @ViewBuilder
@@ -191,11 +202,11 @@ struct CollectionDragAndDropView1: View {
                 withAnimation(.snappy) {
                     appendTask(.working)
                 }
-                return true
-            } isTargeted: { _ in
-
+                return false
             }
         }
+        .frame(maxWidth: .infinity)
+        .background(.ultraThinMaterial)
     }
     // Completed View
     @ViewBuilder
@@ -212,13 +223,12 @@ struct CollectionDragAndDropView1: View {
                 withAnimation(.snappy) {
                     appendTask(.completed)
                 }
-                return true
-            } isTargeted: { _ in
-
+                return false
             }
         }
+        .frame(maxWidth: .infinity)
+        .background(.ultraThinMaterial)
     }
-
 }
 
 #Preview {
