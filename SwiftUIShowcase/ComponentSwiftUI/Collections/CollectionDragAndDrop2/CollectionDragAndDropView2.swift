@@ -62,7 +62,7 @@ struct CollectionDragAndDropView2: View {
     }
 }
 
-struct KanbanView: View {
+private struct KanbanView: View {
 
     let title: String
     let tasks: [String]

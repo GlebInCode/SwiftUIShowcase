@@ -18,7 +18,6 @@ struct SwiftUICollections: View {
                 NavigationLink(destination: CollectionDragAndDropView2()) {
                     ButtonLabel(text: "Drag and Drop 2", color: .gray)
                 }
-
             }
 
         }

@@ -15,6 +15,11 @@ struct MainMenuView: View {
                 .font(.title)
             VStack {
                 HStack {
+                    NavigationLink(destination: ChallengeView()) {
+                        ButtonLabel(text: "Swift Quiz", color: .black)
+                    }
+                }
+                HStack {
                     NavigationLink(destination: TestOne()) {
                         ButtonLabel(text: "Test One", color: .cyan)
                     }

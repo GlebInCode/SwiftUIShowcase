@@ -44,7 +44,6 @@ struct CollectionDragAndDropView1: View {
                 }
                 .frame(height: 45)
             }
-            Spacer()
         })
         .frame(maxWidth: .infinity)
         .background(Color(.secondarySystemFill))
@@ -67,27 +66,12 @@ struct CollectionDragAndDropView1: View {
                     .frame(width: size.width, height: size.height, alignment: .leading)
                     .background(.red)
                     .contentShape(.dragPreview, .rect(cornerRadius: 10))
-                    .onDrag() {
-                        switch task.status {
-                        case .todo:
-                            todo.removeAll(where: { $0.id == task.id })
-                            return NSItemProvider(object: task.title as NSItemProviderWriting)
-                        case .working:
-                            working.removeAll(where: { $0.id == task.id })
-                            return NSItemProvider(object: task.title as NSItemProviderWriting)
-                        case .completed:
-                            completed.removeAll(where: { $0.id == task.id })
-                            return NSItemProvider(object: task.title as NSItemProviderWriting)
-                        }
-                    }
                     .onAppear(perform: {
                         currentlyDragging = task
-
                     })
             }
             .dropDestination(for: String.self) { items, location in
                 currentlyDragging = nil
-
                 return false
             } isTargeted: { status in
                 if let currentlyDragging, status, currentlyDragging.id != task.id {
@@ -159,6 +143,7 @@ struct CollectionDragAndDropView1: View {
             if let sourceIndex = tasks.firstIndex(where: { $0.id == currentlyDragging.id }),
                let destionIndex = tasks.firstIndex(where: { $0.id == droppingTask.id}) {
                 // Swapping Item's in the List
+                print("перемещение из \(sourceIndex) в \(destionIndex)")
                 var sourceItem = tasks.remove(at: sourceIndex)
                 sourceItem.status = status
                 tasks.insert(sourceItem, at: destionIndex)
@@ -182,7 +167,6 @@ struct CollectionDragAndDropView1: View {
                 }
                 return false
             }
-            Spacer()
         }
         .frame(maxWidth: .infinity)
         .background(.ultraThinMaterial)
