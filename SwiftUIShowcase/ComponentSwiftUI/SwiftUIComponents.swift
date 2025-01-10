@@ -15,13 +15,12 @@ struct SwiftUIComponents: View {
                 NavigationLink(destination: SwiftUIText()) {
                     ButtonLabel(text: "Text", color: .gray)
                 }
+                NavigationLink(destination: SwiftUICollections()) {
+                    ButtonLabel(text: "Collections", color: .gray)
+                }
             }
 
         }
         .navigationTitle("SwiftUI Components")
     }
-}
-
-#Preview {
-    SwiftUIComponents()
 }
